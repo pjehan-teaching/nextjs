@@ -1,0 +1,325 @@
+<section id="routing">
+
+    <section>
+        <h2>Les routes</h2>
+    </section>
+
+    <section>
+        <h3>App Router VS Page Router</h3>
+        <p>Un nouveau système de routage a été introduit avec NextJS 13. Il s'agit de <strong>App Router</strong>.</p>
+        <p>App Router permet d'utiliser les <strong>dernières fonctionnalités de React</strong> tel que les Server Components et le système de Streaming.</p>
+        <p>Il est donc recommandé aujourd'hui d'utiliser App Router et l'ensemble des slides suivantes seront basées sur ce nouveau système.</p>
+        <footer>
+            <a href="https://nextjs.org/docs#app-router-vs-pages-router" target="_blank" class="info">
+                App Router vs Pages Router
+            </a>
+        </footer>
+    </section>
+
+    <section>
+        <h3>Dossiers et fichiers</h3>
+        <p>Avec NextJS, la gestion des routes se fait par l'<strong>arborescence</strong> des dossiers et des fichiers.</p>
+        <p>
+            Il est donc important de respecter certaines <strong>conventions</strong> dans le nommage des dossiers et
+            des fichiers pour que le routage fonctionne correctement.
+        </p>
+        <footer>
+            <a href="https://nextjs.org/docs/app/building-your-application/routing#file-conventions" target="_blank" class="info">
+                File Conventions
+            </a>
+        </footer>
+    </section>
+
+    <section>
+        <h3>Dossiers et fichiers - Exemple</h3>
+        <p>Voici un exemple de structure de dossiers et de fichiers pour un site web simple.</p>
+        <pre><code class="language-">app
+├── about
+│   └── page.jsx --> Page "A propos"
+├── news
+│   ├── layout.jsx --> Layout de la section "Actualités"
+│   └── page.jsx --> Page "Actualités"
+├── layout.jsx --> Layout principal de l'application
+├── page.jsx --> Page d'accueil</code></pre>
+        <footer>
+            <a href="https://nextjs.org/docs/app/building-your-application/routing/defining-routes#creating-routes" class="info">
+                Il est possible d'utiliser les extensions <code>.js</code>, <code>.jsx</code> ou <code>.tsx</code>
+            </a>
+            <a href="https://nextjs.org/docs/app/building-your-application/routing#the-app-router" class="info">
+                Les pages sont des Server Components par défaut
+            </a>
+        </footer>
+    </section>
+
+    <section>
+        <h3>Layouts et templates</h3>
+        <p>Il est possible de créer des <strong>layouts</strong> et des <strong>templates</strong> pour organiser le code de votre application.</p>
+        <p>
+            Il est obligatoire de créer un layout principal qui contiendra les balises
+            <code class="language-jsx">&lt;html&gt;</code> et <code class="language-jsx">&lt;body&gt;</code> :
+        </p>
+        <pre><code class="language-jsx">export default function RootLayout({children}: {children: React.ReactNode}) {
+  return (
+    &lt;html&gt;
+      &lt;body&gt;
+        {children}
+      &lt;/body&gt;
+    &lt;/html&gt;
+  )
+}</code></pre>
+        <p>Si aucun autre fichier <code>layout.jsx</code> n'est présent, l'ensemble des pages utiliseront ce layout.</p>
+    </section>
+
+    <section>
+        <h3>Layouts et templates</h3>
+        <p>
+            Lorsqu'un internaute va naviguer d'une page à une autre et que ces 2 pages utilisent le même template,
+            le composant React du layout ne sera <strong>chargé qu'une seule fois</strong>.
+        </p>
+        <p>
+            Cela permet d'optimiser les performances de votre application en évitant de recharger le layout à chaque changement de page.
+        </p>
+        <p>
+            À l'inverse, si l'on créer un fichier <strong><code>template.js</code></strong> à la place de <code>layout.js</code>,
+            le composant React sera <strong>rechargé</strong> à chaque changement de page.
+        </p>
+    </section>
+
+    <section>
+        <h3>Layouts et templates - Metadata</h3>
+        <p>Il est possible de définir des <strong>meta-données</strong> pour chaque page de votre application.</p>
+        <p>Les meta-données ne seront pas définie dans le fichier <code>layout.js</code> mais au niveau des pages :</p>
+<pre><code class="language-jsx">import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Homepage'
+};
+
+export default function Page() {
+  [...]
+};</code></pre>
+    </section>
+
+    <section>
+        <h3>Liens et navigation</h3>
+        <p>NextJS permet de naviguer entre les URLs de notre application de 4 manières différentes :</p>
+        <ul>
+            <li>
+                En utilisant le composant
+                <a href="https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating#link-component" target="_blank">&lt;Link&gt;</a>
+            </li>
+            <li>
+                En utilisant le hook
+                <a href="https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating#userouter-hook" target="_blank">useRouter()</a>
+                (Client component)
+            </li>
+            <li>
+                En utilisant la fonction
+                <a href="https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating#redirect-function" target="_blank">redirect()</a>
+                (Server component)
+            </li>
+            <li>
+                En utilisant l'API native
+                <a href="https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating#using-the-native-history-api" target="_blank">History API</a>
+            </li>
+        </ul>
+        <footer>
+            <a href="https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating" target="_blank" class="info">
+                Linking and Navigating
+            </a>
+        </footer>
+    </section>
+
+    <section>
+        <h3>Liens et navigation - Composant Link</h3>
+        <p>Le composant <code>&lt;Link&gt;</code> permet de naviguer entre les différentes pages de votre application.</p>
+        <p>
+            Il permet d'améliorer la balise HTML <code>&lt;a&gt;</code> en
+            <a href="https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating#2-prefetching" target="_blank">préchargeant</a>
+            les pages en arrière-plan et en évitant le rechargement complet de la page (uniquement en prod).
+        </p>
+        <pre><code class="language-jsx">import Link from 'next/link'
+
+export default function Page() {
+  return (
+    &lt;Link href="/about"&gt;About&lt;/Link&gt;
+  )
+}</code></pre>
+        <footer>
+            <a href="https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating#link-component" target="_blank" class="info">
+                Link Component
+            </a>
+        </footer>
+    </section>
+
+    <section>
+        <h3>Liens et navigation - Hook useRouter</h3>
+        <p>Le hook <code>useRouter()</code> peut être utilisé dans les Client components :</p>
+        <pre><code class="language-jsx">'use client'
+
+import { useRouter } from 'next/router'
+
+export default function Page() {
+    const router = useRouter();
+
+    return (
+        &lt;button onClick={() => router.push('/about')&gt;About&lt;/button&gt;
+    );
+}</code></pre>
+        <footer>
+            <a href="https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating#userouter-hook" target="_blank" class="info">
+                useRouter Hook
+            </a>
+        </footer>
+    </section>
+
+    <section>
+        <h3>Liens et navigation - Fonction redirect</h3>
+        <p>La fonction <code>redirect()</code> peut être utilisée dans les Server components :</p>
+        <pre data-line="11" class="line-numbers"><code class="language-jsx">import 'server-only'
+
+import { cookies } from 'next/headers'
+import { decrypt } from '@/app/lib/session'
+
+export const verifySession = cache(async () => {
+  const cookie = cookies().get('session')?.value
+  const session = await decrypt(cookie)
+
+  if (!session?.userId) {
+    redirect('/login')
+  }
+
+  return { isAuth: true, userId: session.userId }
+})</code></pre>
+        <footer>
+            <a href="https://react.dev/reference/react/experimental_taintUniqueValue#using-server-only-and-taintuniquevalue-to-prevent-leaking-secrets" target="_blank" class="info">
+                import 'server-only' permet de ne pas exposer le code côté client
+            </a>
+            <a href="https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating#redirect-function" target="_blank" class="info">
+                redirect Function
+            </a>
+        </footer>
+    </section>
+
+    <section>
+        <h3>Routes dynamiques</h3>
+        <p>NextJS permet de créer des routes dynamiques en utilisant des crochets <code>[...]</code> dans le nom des dossiers :</p>
+        <pre><code class="language-">app
+├── about
+│   └── page.jsx
+├── news
+│   ├── layout.jsx
+│   ├── page.jsx
+│   └── [slug]
+│       └── page.jsx --> Page dynamique accessible via /news/:slug
+├── layout.jsx
+├── page.jsx</code></pre>
+        <footer>
+            <a href="https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes" target="_blank" class="info">
+                Dynamic Routes
+            </a>
+        </footer>
+    </section>
+
+    <section>
+        <h3>Routes dynamiques - Exemple</h3>
+        <p>Voici un exemple de page dynamique qui affiche le contenu d'un article en fonction de son slug :</p>
+        <pre><code class="language-jsx">// pages/news/[slug]/page.jsx
+
+export default function Page({params}: {params: {slug: string}}) {
+  return (
+    &lt;h1&gt;Article {params.slug}&lt;/h1&gt;
+  )
+}</code></pre>
+    </section>
+
+    <section>
+        <h3>Gestion des erreurs</h3>
+        <p>NextJS permet de gérer les erreurs 404 et 500 en créant des fichiers spécifiques :</p>
+        <pre><code class="language-">app
+├── about
+│   └── page.jsx
+├── news
+│   ├── layout.jsx
+│   ├── page.jsx
+│   └── [slug]
+│       ├── page.jsx
+│       ├── error.jsx --> Page d'erreur 500
+│       └── not-found.jsx --> Page d'erreur 404
+├── layout.jsx
+├── page.jsx</code></pre>
+    </section>
+
+    <section>
+        <h3>Gestion des erreurs - Exemple</h3>
+        <p>Voici un exemple de code pour la gestion des erreurs 500 :</p>
+        <pre><code class="language-jsx">// pages/news/[slug]/error.jsx
+'use client'
+
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string }
+  reset: () => void
+}) {
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;Something went wrong!&lt;/h2&gt;
+      &lt;button onClick={() => reset()}&gt;Try again&lt;/button&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+        <footer>
+            <a href="https://nextjs.org/docs/app/building-your-application/routing/error-handling" target="_blank" class="info">
+                Error Handling
+            </a>
+        </footer>
+    </section>
+
+    <section>
+        <h3>Gestion des erreurs - Exemple</h3>
+        <p>Voici un exemple de code pour la gestion des erreurs 404 :</p>
+        <pre><code class="language-jsx">// pages/news/[slug]/not-found.jsx
+import Link from 'next/link'
+
+export default function NotFound() {
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;Not Found&lt;/h2&gt;
+      &lt;p&gt;Could not find requested resource&lt;/p&gt;
+      &lt;Link href="/">Return Home&lt;/Link&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+        <footer>
+            <a href="https://nextjs.org/docs/app/api-reference/file-conventions/not-found" target="_blank" class="info">
+                Not Found
+            </a>
+        </footer>
+    </section>
+
+    <section>
+        <h3>Aller plus loin...</h3>
+        <p>La documentation de NextJS comprend de nombreuses pages supplémentaire pour aller plus loin sur le routage :</p>
+        <ul>
+            <li>
+                <a href="https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming" target="_blank">Loading UI and Streaming</a> :
+                Créer un fichier <code>loading.js</code> pour afficher un loader pendant le chargement de la page.
+            </li>
+            <li>
+                <a href="https://nextjs.org/docs/app/building-your-application/routing/route-groups" target="_blank">Route Groups</a> :
+                Créer des groupes de routes pour organiser votre application sans impacter la structure des URLs.
+            </li>
+            <li>
+                <a href="https://nextjs.org/docs/app/building-your-application/routing/route-handlers" target="_blank">Route Handlers</a> :
+                Créer un fichier <code>route.js</code> pour gérer les requêtes HTTP (création d'une API).
+            </li>
+            <li>
+                <a href="https://nextjs.org/docs/app/building-your-application/routing/middleware" target="_blank">Middleware</a> :
+                Créer un fichier <code>middleware.js</code> pour ajouter des middlewares à votre application.
+            </li>
+        </ul>
+    </section>
+
+</section>

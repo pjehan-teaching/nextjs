@@ -1,0 +1,117 @@
+<section id="installation">
+
+    <section>
+        <h2>Installation</h2>
+    </section>
+
+    <section>
+        <h3>Création du projet</h3>
+        <p>La création d'un projet NextJS est très simple grâce à la commande <code class="language-shell">create-next-app</code>.</p>
+        <p>Il suffit de lancer la commande suivante dans votre terminal :</p>
+        <pre><code class="language-shell">npx create-next-app@latest</code></pre>
+    </section>
+
+    <section>
+        <h3>Création du projet</h3>
+        <p>Lors de la création du projet, la commande <code class="language-shell">create-next-app</code> va vous aider à configurer votre projet :</p>
+        <ul>
+            <li>
+                <code class="language-shell">Would you like to use TypeScript?</code>
+                <p>
+                    <a href="https://www.typescriptlang.org/" target="_blank">TypeScript</a> est un langage de
+                    programmation permettant d'ajouter du typage au langage JavaScript.
+                    Les <a href="https://survey.stackoverflow.co/2023/#technology-most-popular-technologies" target="_blank">statistiques</a>
+                    montrent que ce langage est de plus en plus utilisé.<br>
+                    On va donc généralement répondre <code class="language-shell">Yes</code> à cette question.
+                </p>
+            </li>
+            <li>
+                <code class="language-shell">Would you like to use ESLint?</code>
+                <p>
+                    <a href="https://eslint.org/" target="_blank">ESLint</a> est un outil permettant de vérifier
+                    la qualité du code JavaScript.<br>
+                    On va généralement répondre <code class="language-shell">Yes</code> à cette question.
+                </p>
+            </li>
+            <li>
+                <code class="language-shell">Would you like to use Tailwind CSS?</code>
+                <p>
+                    <a href="https://tailwindcss.com/" target="_blank">Tailwind CSS</a> est un framework CSS
+                    permettant de créer des interfaces rapidement.<br>
+                    On peut choisir de répondre <code class="language-shell">Yes</code> à cette question.
+                </p>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h3>Création du projet</h3>
+        <ul>
+            <li>
+                <code class="language-shell">Would you like to use `src/` directory?</code>
+                <p>
+                    Cette question permet de choisir si on souhaite utiliser un dossier <code class="language-shell">src/</code>
+                    pour stocker les fichiers sources de notre application.
+                    Ce dossier n'est <a href="https://nextjs.org/docs/app/building-your-application/configuring/src-directory">pas présent historiquement</a>
+                    dans les projets NextJS mais l'on peut choisir de l'utiliser.<br>
+                    On peut choisir de répondre <code class="language-shell">Yes</code> à cette question.
+                </p>
+            </li>
+            <li>
+                <code class="language-shell">Would you like to use App Router? (recommended)</code>
+                <p>
+                    Introduit dans la version 13 de NextJS,
+                    l'<a href="https://nextjs.org/docs/app/building-your-application/routing#the-app-router" target="_blank">App Router</a>
+                    est la nouvelle manière de gérer les routes de nos applications.
+                    Par défaut, les composants créés dans ce dossier seront des
+                    <a href="https://nextjs.org/docs/app/building-your-application/rendering/server-components" target="_blank">Server Components</a>
+                    <br>
+                    On va généralement répondre <code class="language-shell">Yes</code> à cette question.
+                </p>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h3>Création du projet</h3>
+        <ul>
+            <li>
+                <code class="language-shell">Would you like to customize the default import alias (@/*)?</code>
+                <p>
+                    Cette question permet de choisir si on souhaite utiliser un alias pour importer nos fichiers.
+                    Par défaut, NextJS utilise l'alias <code class="language-shell">@/</code> pour importer les fichiers du dossier <code class="language-shell">src/</code>.<br>
+                    Cela permettra de simplifier les imports dans notre application :
+                    <pre><code class="language-javascript">import { Button } from '../../components/Button'; // Sans alias
+import { Button } from '@/components/Button'; // Avec alias</code></pre>
+                    On va généralement répondre <code class="language-shell">Yes</code> à cette question.
+                </p>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h3>Structure du projet</h3>
+        <p>Voici la structure de fichiers de base d'un projet NextJS :</p>
+        <pre><code class="language-shell">my-next-app/
+├── .next/ # Dossier généré par NextJS pour optimiser les performances
+├── node_modules/ # Dossier contenant les dépendances du projet
+├── public/ # Dossier contenant les fichiers statiques (images, fonts...)
+│   ├── next.svg
+│   └── vercel.svg
+├── src/ # Dossier contenant les fichiers sources de l'application (si sélectionné lors de la création du projet)
+│   ├── app/ # Dossier contenant les pages de l'application
+│   │   └── favicon.ico
+│   │   └── global.css
+│   │   └── layout.tsx # Layout de l'application
+│   │   └── page.tsx # Page d'accueil
+├── .eslintrc.js # Configuration d'ESLint (si ESLint sélectionné lors de la création du projet)
+├── .gitignore
+├── next.config.mjs # Configuration de NextJS (ES6 module file)
+├── package.json
+├── postcss.config.mjs # Configuration de PostCSS (si Tailwind sélectionné lors de la création du projet)
+├── README.md
+├── tailwind.config.ts # Configuration de Tailwind CSS (si Tailwind sélectionné lors de la création du projet)
+└── tsconfig.json # Configuration de TypeScript (si TypeScript sélectionné lors de la création du projet)</code></pre>
+    </section>
+
+</section>

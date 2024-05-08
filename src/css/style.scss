@@ -10,6 +10,14 @@
         code {
             padding: 0;
         }
+        .line-highlight {
+            margin-top: 10px;
+        }
+        &.line-numbers {
+            .line-highlight {
+                margin-top: 15px;
+            }
+        }
     }
 
     .slides {
@@ -23,6 +31,10 @@
                 }
             }
         }
+    }
+
+    .chart-container {
+        min-height: max(50vh, 300px);
     }
 
 }

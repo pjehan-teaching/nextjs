@@ -1,0 +1,289 @@
+<section id="rendering">
+
+    <section>
+        <h2>Rendu</h2>
+        <ul>
+            <li>
+                <a href="#/ssg">SSG (Static Site Generation)</a>
+            </li>
+            <li>
+                <a href="#/csr">CSR (Client-Side Rendering)</a>
+            </li>
+            <li>
+                <a href="#/ssr">SSR (Server-Side Rendering)</a>
+            </li>
+        </ul>
+    </section>
+
+    <section data-state="chart-traditional">
+        <h3>Le rendu traditionnel</h3>
+        <div class="container">
+            <div class="col" style="flex-grow: 2">
+                <p>
+                    Historiquement, la méthode principalement utilisée pour créer des pages web était de générer le <strong>code HTML complet</strong> côté serveur.
+                </p>
+                <p>
+                    Avec l'arrivée des frameworks front-end, le <strong>rendu côté client</strong> est devenu de plus en plus populaire.
+                </p>
+                <p>
+                    Plus récemment, le <strong>rendu hybride</strong> est devenu une solution de plus en plus utilisée.
+                </p>
+            </div>
+            <div class="col chart-container">
+                <canvas id="chart-traditional"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <section id="ssg" data-state="chart-ssg">
+        <h3>SSG (Static Site Generation)</h3>
+        <div class="container">
+            <div class="col" style="flex-grow: 2">
+                <p>
+                    Le <strong>Static Site Generation</strong> est une technique de rendu côté serveur.
+                </p>
+                <p>
+                    Lorsque l'application va être <strong>buildée</strong>, le serveur va générer le <strong>code HTML complet</strong> de chaque page.
+                </p>
+                <p>
+                    Le navigateur va ensuite <strong>afficher directement le contenu</strong> de la page et il n'y aura
+                    aucun traitement côté serveur et très peu de traitement côté client.
+                </p>
+            </div>
+            <div class="col chart-container">
+                <canvas id="chart-ssg"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h3>SSG avantages et inconvénients</h3>
+        <div class="container">
+            <div class="col">
+                <h4>Avantages</h4>
+                <ul>
+                    <li>Optimisation du référencement (SEO)</li>
+                    <li>Temps de chargement initial très rapide</li>
+                    <li>Peu de traitements côté client</li>
+                </ul>
+            </div>
+            <div class="col">
+                <h4>Inconvénients</h4>
+                <ul>
+                    <li>Pas adapté pour l'affichage de données dynamiques</li>
+                    <li>Expérience utilisateur moins fluide</li>
+                    <li>Temps de chargement un peu plus long lors de la navigation</li>
+                    <li>Si le site comprend énormément de pages, le build peut être très long</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h3>Quand utiliser SSG ?</h3>
+        <p>Généralement, il est nécessaire ou recommandé d'utiliser le Static Site Generation lorsque :</p>
+        <ul>
+            <li>Le site ne contient <strong>pas ou peu de données dynamiques</strong></li>
+            <li>Les internautes ne peuvent <strong>pas créer de compte</strong> ou se connecter</li>
+            <li>On souhaite optimiser le <strong>référencement</strong> (SEO)</li>
+            <li>On souhaite limiter les <strong>traitements côté client et côté serveur</strong></li>
+            <li>On souhaite <strong>optimiser le temps de chargement</strong> initial</li>
+        </ul>
+        <p>
+            Le SSG est très adapté pour créer un blog, un portfolio, un site vitrine... à partir du moment où le
+            contenu ne change pas régulièrement et que les internautes ne peuvent pas se connecter au site.
+        </p>
+    </section>
+
+    <section>
+        <h3>SSG avec NextJS</h3>
+        <p>
+            Pour générer un site en <strong>Static Site Generation</strong> avec NextJS, il suffit de
+            modifier le fichier de configuration <code class="language-js">next.config.js</code> et de modifier
+            la propriété <code class="language-js">output</code> en lui passant la valeur <code class="language-js">'export'</code> :
+        </p>
+        <pre><code class="language-js">const nextConfig = {
+    output: 'export'
+};</code></pre>
+        <p>
+            Certaines <a href="https://nextjs.org/docs/app/building-your-application/deploying/static-exports#unsupported-features" target="_blank">fonctionnalités</a>
+            de NextJS ne sont pas compatibles avec le SSG et ne pourront pas être utilisées.
+        </p>
+        <footer>
+            <a href="https://nextjs.org/docs/pages/building-your-application/deploying/static-exports" target="_blank" class="info">
+                Documentation NextJS - Static Exports
+            </a>
+        </footer>
+    </section>
+
+    <section>
+        <h3>SSG - Exercice</h3>
+        <div class="instructions">
+            <ol>
+                <li>Créer une nouvelle application NextJS</li>
+                <li>Créer une page <code class="language-js">/about</code> avec un composant <code class="language-js">About</code></li>
+                <li>Créer une page <code class="language-js">/contact</code> avec un composant <code class="language-js">Contact</code></li>
+                <li>Générer une version statique de l'application</li>
+            </ol>
+        </div>
+    </section>
+
+    <section id="csr" data-state="chart-csr">
+        <h3>CSR (Client-Side Rendering)</h3>
+        <div class="container">
+            <div class="col" style="flex-grow: 2">
+                <p>
+                    Le <strong>Client-Side Rendering</strong> est une technique de rendu côté client.
+                </p>
+                <p>
+                    Le navigateur va télécharger le <strong>code HTML minimal</strong> et le code JavaScript nécessaire pour afficher la page.
+                </p>
+                <p>
+                    Le code JavaScript va ensuite se charger de <strong>générer les composants</strong> qui seront affichés sur la page.
+                </p>
+            </div>
+            <div class="col chart-container">
+                <canvas id="chart-csr"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h3>CSR avantages et inconvénients</h3>
+        <div class="container">
+            <div class="col">
+                <h4>Avantages</h4>
+                <ul>
+                    <li>Expérience utilisateur fluide</li>
+                    <li>Optimisation du temps de chargement lors de la navigation</li>
+                </ul>
+            </div>
+            <div class="col">
+                <h4>Inconvénients</h4>
+                <ul>
+                    <li>Temps de chargement initial plus long</li>
+                    <li>Beaucoup de traitements côté client</li>
+                    <li>Problèmes de référencement (SEO)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h3>Quand utiliser CSR ?</h3>
+        <p>Généralement, il est nécessaire ou recommandé d'utiliser le Client-Side Rendering lorsque :</p>
+        <ul>
+            <li>On souhaite ajouter de l'interactivité ou écouter des événements</li>
+            <li>
+                On souhaite gérer un state avec les hooks <code class="language-js">useState()</code>
+                ou <code class="language-js">useReducer()</code>.
+            </li>
+            <li>
+                On souhaite utiliser des lifecycle hooks comme <code class="language-js">useEffect()</code>
+                ou <code class="language-js">useLayoutEffect()</code>.
+            </li>
+            <li>
+                On souhaite utiliser des fonctionnalités liées aux navigateurs comme le
+                <a href="https://developer.mozilla.org/fr/docs/Web/API/Window" target="_blank">localStorage</a>.
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h3>CSR avec NextJS</h3>
+        <p>
+            Pour marquer un composant comme un composant client, il faut utiliser la directive React
+            <a href="https://react.dev/reference/rsc/use-client">'use client'</a>.
+        </p>
+        <p>
+            L'ensemble des <strong>composants enfants</strong> d'un composant client seront également
+            <strong>considérés comme des composants client</strong>.
+        </p>
+        <footer>
+            <a href="https://nextjs.org/docs/app/building-your-application/rendering/client-components" target="_blank" class="info">
+                Documentation NextJS - Client Components
+            </a>
+        </footer>
+    </section>
+
+    <section id="ssr" data-state="chart-ssr">
+        <h3>SSR (Server-Side Rendering)</h3>
+        <div class="container">
+            <div class="col" style="flex-grow: 2">
+                <p>
+                    Le <strong>Server-Side Rendering</strong> est une technique de rendu côté serveur.
+                </p>
+                <p>
+                    Le serveur va générer le <strong>code HTML complet</strong> de la page et le renvoyer au navigateur.
+                </p>
+                <p>
+                    Le navigateur va ensuite <strong>afficher directement le contenu</strong> de la page.
+                </p>
+                <p>
+                    Cette approche est similaire à la manière traditionnellement utilisée de générer des pages web.
+                </p>
+            </div>
+            <div class="col chart-container">
+                <canvas id="chart-ssr"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h3>SSR avantages et inconvénients</h3>
+        <div class="container">
+            <div class="col">
+                <h4>Avantages</h4>
+                <ul>
+                    <li>Optimisation du référencement (SEO)</li>
+                    <li>Temps de chargement initial plus court</li>
+                    <li>Peu de traitements côté client</li>
+                </ul>
+            </div>
+            <div class="col">
+                <h4>Inconvénients</h4>
+                <ul>
+                    <li>Expérience utilisateur moins fluide</li>
+                    <li>Temps de chargement plus long lors de la navigation</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h3>Quand utiliser SSR ?</h3>
+        <p>Généralement, il est nécessaire ou recommandé d'utiliser le Server-Side Rendering lorsque :</p>
+        <ul>
+            <li>On souhaite limiter les traitements côté client</li>
+            <li>On souhaite optimiser le référencement (SEO)</li>
+            <li>On souhaite interagir avec la base de données</li>
+        </ul>
+    </section>
+
+    <section>
+        <h3>SSR avec NextJS</h3>
+        <p>
+            Pour marquer un composant comme un composant serveur, il faut utiliser la directive React
+            <a href="https://react.dev/reference/rsc/use-server">'use server'</a>.
+        </p>
+        <p>
+            L'ensemble des <strong>composants enfants</strong> d'un composant serveur seront également
+            <strong>considérés comme des composants serveur</strong>.
+        </p>
+        <footer>
+            <a href="https://nextjs.org/docs/app/building-your-application/rendering/server-components" target="_blank" class="info">
+                Documentation NextJS - Server Components
+            </a>
+        </footer>
+    </section>
+
+
+
+    <section data-state="chart-summary">
+        <h3>Résumé</h3>
+        <div style="height: 60vh">
+            <canvas id="chart-summary"></canvas>
+        </div>
+    </section>
+
+</section>
