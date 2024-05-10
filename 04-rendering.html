@@ -12,6 +12,9 @@
             <li>
                 <a href="#/ssr">SSR (Server-Side Rendering)</a>
             </li>
+            <li>
+                <a href="#/isr">ISR (Incremental Static Regeneration)</a>
+            </li>
         </ul>
     </section>
 
@@ -277,7 +280,76 @@
         </footer>
     </section>
 
+    <section id="isr" data-state="chart-isr">
+        <h3>ISR (Incremental Static Regeneration)</h3>
+        <div class="container">
+            <div class="col" style="flex-grow: 2">
+                <p>
+                    L'<strong>Incremental Static Regeneration</strong> est une technique qui combine le SSG et le SSR.
+                </p>
+                <p>
+                    Lorsque l'application va être <strong>buildée</strong>, le serveur va générer le <strong>code HTML complet</strong> de chaque page.
+                </p>
+                <p>
+                    Lorsqu'un internaute va naviguer sur le site, le serveur va <strong>regénérer les pages</strong>
+                    pour lesquelles le contenu a changé.
+                </p>
+            </div>
+            <div class="col chart-container">
+                <canvas id="chart-isr"></canvas>
+            </div>
+        </div>
+    </section>
 
+    <section>
+        <h3>ISR avantages et inconvénients</h3>
+        <div class="container">
+            <div class="col">
+                <h4>Avantages</h4>
+                <ul>
+                    <li>Optimisation du référencement (SEO)</li>
+                    <li>Temps de chargement initial très rapide</li>
+                    <li>Peu de traitements côté serveur</li>
+                    <li>Expérience utilisateur fluide</li>
+                </ul>
+            </div>
+            <div class="col">
+                <h4>Inconvénients</h4>
+                <ul>
+                    <li>Pas forcément adapté si le contenu de plusieurs pages change très régulièrement</li>
+                    <li>Si le site comprend énormément de pages, le build peut être très long</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h3>Quand utiliser ISR ?</h3>
+        <p>Généralement, il est nécessaire ou recommandé d'utiliser l'Incremental Static Regeneration lorsque :</p>
+        <ul>
+            <li>Le site contient des données dynamiques</li>
+            <li>Les internautes peuvent créer un compte ou se connecter</li>
+            <li>On souhaite optimiser le référencement (SEO)</li>
+            <li>On souhaite limiter les traitements côté client et côté serveur</li>
+            <li>On souhaite optimiser le temps de chargement initial</li>
+        </ul>
+        <p>
+            L'ISR est très adapté pour créer un site e-commerce, un site de réservation, un site de news... à partir du
+            moment où le contenu change régulièrement et que les internautes peuvent se connecter au site.
+        </p>
+    </section>
+
+    <section>
+        <h3>ISR avec Next.js</h3>
+        <p>
+            Depuis les dernières versions de Next.js, l'<strong>Incremental Static Regeneration</strong> est
+            totalement transparent pour le développeur.
+        </p>
+        <p>
+            Le système de cache de Next.js va automatiquement <strong>regénérer les pages ou composants</strong>
+            pour lesquelles le contenu a changé.
+        </p>
+    </section>
 
     <section data-state="chart-summary">
         <h3>Résumé</h3>
