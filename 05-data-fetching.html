@@ -4,4 +4,495 @@
         <h2>Gérer les données</h2>
     </section>
 
+    <section>
+        <h3>Méthodes pour récupérer des données</h3>
+        <p>Il existe plusieurs méthodes pour récupérer des données dans une application ReactJS. Les plus courantes sont :</p>
+        <ul>
+            <li>Utiliser l'<a href="https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#fetching-data-on-the-server-with-fetch" target="_blank">API fetch</a> côté serveur</li>
+            <li>Utiliser une <a href="https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#fetching-data-on-the-server-with-third-party-libraries" target="_blank">librairie tier</a> comme un ORM côté serveur</li>
+            <li>Utiliser l'API fetch côté client en utilisant un <a href="https://nextjs.org/docs/app/building-your-application/routing/route-handlers" target="_blank">Route Handler</a>côté serveur</li>
+            <li>Utiliser une librairie tier comme <a href="https://tanstack.com/query/latest" target="_blank">TanStack Query</a> côté client</li>
+        </ul>
+    </section>
+
+    <section>
+        <h3>Memoization</h3>
+        <p>
+            Memoization est une méthode de stockage en <strong>cache des résultats de fonctions</strong> lorsqu'elles sont appelées avec les mêmes arguments.
+            Cela permet d'éviter de recalculer les mêmes valeurs à chaque appel de fonction.
+        </p>
+        <p>React étend automatiquement l'API fetch pour permettre de diminuer le nombre de requêtes.</p>
+        <p>
+            Si l'API fetch ne peut pas être utilisée () il est toujours possible d'utiliser la fonction
+            <a href="https://nextjs.org/docs/app/building-your-application/caching#react-cache-function" target="_blank">cache</a> de React.
+        </p>
+        <footer>
+            <a href="https://nextjs.org/docs/app/building-your-application/caching#request-memoization" target="_blank" class="info">
+                Request Memoization
+            </a>
+        </footer>
+    </section>
+
+    <section>
+        <h3>Data Cache</h3>
+        <p>Next.js étend également automatiquement l'API fetch pour ajouter un <strong>système de cache similaire à la memoization de React</strong>.</p>
+        <p>
+            Cependant, le système de cache de <a href="https://nextjs.org/docs/app/building-your-application/caching#data-cache" target="_blank">Data Cache</a>
+            de Next.js est plus avancé, car les données sont persistées pour plusieurs requêtes contrairement à la memoization qui ne fonctionne que pour
+            un seul affichage à la fois.
+        </p>
+    </section>
+
+    <section>
+        <h3>Data Cache</h3>
+        <p>Le Data Cache étant persistant, il faut effectuer des <strong>revalidations</strong> pour actualiser les données.</p>
+        <p>Il est possible d'actualiser les données de deux manières différentes :</p>
+        <ul>
+            <li>
+                <a href="https://nextjs.org/docs/app/building-your-application/caching#time-based-revalidation" target="_blank">
+                    Après un certain temps
+                </a>
+                <p>
+                    Il est possible de définir un intervalle de temps pour actualiser les données :
+                </p>
+                <pre><code class="language-javascript">fetch('https://...', { next: { revalidate: 3600 } })</code></pre>
+            </li>
+            <li>
+                <a href="https://nextjs.org/docs/app/building-your-application/caching#on-demand-revalidation" target="_blank">
+                    À la demande
+                </a>
+                <p>
+                    Il est possible d'appeler les fonctions
+                    <a href="https://nextjs.org/docs/app/building-your-application/caching#revalidatepath" target="_blank">revalidatePath()</a>
+                    ou
+                    <a href="https://nextjs.org/docs/app/building-your-application/caching#fetch-optionsnexttags-and-revalidatetag" target="_blank">revalidateTag()</a>
+                    pour actualiser les données.
+                </p>
+                <pre><code class="language-javascript">revalidatePath('/')
+fetch(`https://...`, { next: { tags: ['a', 'b', 'c'] } })
+revalidateTag('a')</code></pre>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h3>Création d'une base de données</h3>
+        <p>Nous allons maintenant créer une base de données pour voir comment manipuler des données.</p>
+        <p>Nous allons pour cela utiliser Docker pour créer un container MySQL :</p>
+        <pre style="max-height: 40vh"><code class="language-yml"># docker-compose.yml
+services:
+  db:
+    image: mysql:5.7
+    restart: on-failure
+    environment:
+      MYSQL_DATABASE: 'wisdomwell'
+      MYSQL_USER: 'wisdomwell'
+      MYSQL_PASSWORD: 'wisdomwell'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - mysql-data:/var/lib/mysql
+  adminer:
+    image: adminer
+    restart: on-failure
+    ports:
+      - '8080:8080'
+volumes:
+  mysql-data:</code></pre>
+        <p>Puis démarrer le container :</p>
+        <pre><code class="language-shell">docker-compose up</code></pre>
+    </section>
+
+    <section>
+        <h3>Création d'une base de données</h3>
+        <p>Il est possible de créer une base de données en utilisant ce code SQL :</p>
+        <pre style="max-height: 40vh"><code class="language-sql">CREATE TABLE IF NOT EXISTS `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `resource` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `title` varchar(255) NOT NULL,
+    `url` varchar(255) NOT NULL,
+    `created_at` datetime NOT NULL,
+    `updated_at` datetime,
+    `user_id` int(11) NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `comment` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `content` text,
+    `score` int(11) NOT NULL,
+    `created_at` datetime NOT NULL,
+    `updated_at` datetime,
+    `user_id` int(11) NOT NULL,
+    `resource_id` int(11) NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`user_id`) REFERENCES `user`(`id`),
+    FOREIGN KEY (`resource_id`) REFERENCES `resource`(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `tag` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `name` varchar(255) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `resource_tag` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `resource_id` int(11) NOT NULL,
+    `tag_id` int(11) NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`resource_id`) REFERENCES `resource`(`id`),
+    FOREIGN KEY (`tag_id`) REFERENCES `tag`(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `user` (`id`, `username`, `password`, `email`) VALUES
+(1, 'admin', 'admin', 'admin@gmail.com'),
+(2, 'user', 'user', 'user@gmail.com');
+
+-- Resources added by different users at different random times
+INSERT INTO `resource` (`id`, `title`, `url`, `created_at`, `updated_at`, `user_id`) VALUES
+(1, 'Next.js Website', 'https://nextjs.org/docs', '2020-01-01 00:00:00', '2022-01-01 00:00:00', 1),
+(2, 'React Website', 'https://reactjs.org/docs/getting-started.html', '2019-05-12 14:25:44', NULL, 1),
+(3, 'NodeJS Website', 'https://nodejs.org/en/docs/', '2020-01-01 00:00:00', '2022-01-01 00:00:00', 2),
+(4, 'Express Website', 'https://expressjs.com/en/starter/installing.html', '2019-05-12 14:25:44', NULL, 2),
+(5, 'MongoDB Website', 'https://docs.mongodb.com/', '2020-01-01 00:00:00', '2022-01-01 00:00:00', 1),
+(6, 'MySQL Website', 'https://dev.mysql.com/doc/', '2019-05-12 14:25:44', NULL, 2),
+(7, 'PostgreSQL Website', 'https://www.postgresql.org/docs/', '2020-01-01 00:00:00', '2022-01-01 00:00:00', 1),
+(8, 'Docker Website', 'https://docs.docker.com/', '2019-05-12 14:25:44', NULL, 2),
+(9, 'Kubernetes Website', 'https://kubernetes.io/docs/', '2020-01-01 00:00:00', '2022-01-01 00:00:00', 1),
+(10, 'AWS Website', 'https://docs.aws.amazon.com/', '2019-05-12 14:25:44', NULL, 2);
+
+-- Tags added to resources
+INSERT INTO `tag` (`id`, `name`) VALUES
+(1, 'React'),
+(2, 'NodeJS'),
+(3, 'MongoDB'),
+(4, 'MySQL'),
+(5, 'PostgreSQL'),
+(6, 'Docker'),
+(7, 'Kubernetes'),
+(8, 'AWS');
+
+INSERT INTO `resource_tag` (`id`, `resource_id`, `tag_id`) VALUES
+(1, 1, 1),
+(1, 1, 2),
+(2, 2, 1),
+(3, 3, 2),
+(4, 4, 2),
+(5, 5, 3),
+(6, 6, 4),
+(7, 7, 5),
+(8, 8, 6),
+(9, 9, 7),
+(10, 10, 8);
+
+-- Comments added by different users at different random times
+INSERT INTO `comment` (`id`, `content`, `score`, `created_at`, `updated_at`, `user_id`, `resource_id`) VALUES
+(1, 'This is a great resource', 5, '2020-01-01 00:00:00', '2022-02-01 00:00:00', 1, 1),
+(2, 'This resource needs to be updated!', 2, '2019-05-12 14:25:44', NULL, 1, 2),
+(3, 'This resource is outdated', 1, '2020-01-01 00:00:00', '2022-02-01 00:00:00', 2, 3),
+(4, 'This resource is very helpful', 4, '2019-05-12 14:25:44', NULL, 2, 4),
+(5, 'This resource is very informative', 5, '2020-01-01 00:00:00', '2022-02-01 00:00:00', 1, 5),
+(6, 'This resource is very detailed', 4, '2019-05-12 14:25:44', NULL, 2, 6),
+(7, 'This resource is very well written', 5, '2020-01-01 00:00:00', '2022-02-01 00:00:00', 1, 7),
+(8, 'This resource is very easy to understand', 4, '2019-05-12 14:25:44', NULL, 2, 8),
+(9, 'This resource is very complex', 3, '2020-01-01 00:00:00', '2022-02-01 00:00:00', 1, 9),
+(10, 'This resource is very useful', 4, '2019-05-12 14:25:44', NULL, 2, 10);</code></pre>
+        <p>
+            Vous pouvez passer par l'interface d'Adminer disponible à l'adresse
+            <a href="http://localhost:8080" target="_blank">http://localhost:8080</a> pour créer la base de données.
+        </p>
+    </section>
+
+    <section>
+        <h3>Création de la base de données</h3>
+        <p>Voici le diagramme de la base de données :</p>
+        <div class="container">
+            <div class="col">
+                <p>Ce projet fictif appelé <strong>Wisdom Well</strong> est une application de partage de ressources pour les développeurs.</p>
+                <p>Les utilisateurs peuvent ajouter des ressources, les commenter et les organiser en utilisant des tags.</p>
+                <p>Les ressources seront des liens vers des sites web, des articles, des vidéos, etc.</p>
+            </div>
+            <div class="col">
+                <img src="assets/images/wisdomwell.png" alt="Wisdom Well">
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h3>API endpoint avec Route Handler</h3>
+        <p>Nous allons dans un premier temps créer un endpoint pour récupérer la liste des ressources.</p>
+        <p>
+            Pour cela, nous allons utiliser les
+            <a href="https://nextjs.org/docs/app/building-your-application/routing/route-handlers" target="_blank">Route Handlers</a>
+            de Next.js :
+        </p>
+        <pre style="max-height: 40vh"><code class="language-ts">// src/app/api/resources/route.ts
+import mysql from 'mysql2/promise';
+
+export async function GET(request: Request) {
+    const connection = await mysql.createConnection({
+        host: 'localhost',
+        user: 'wisdomwell',
+        database: 'wisdomwell',
+        password: 'wisdomwell'
+    });
+
+    try {
+        const [rows] = await connection.query('SELECT * FROM resource');
+        await connection.end();
+        return new Response(JSON.stringify(rows), { headers: { 'Content-Type': 'application/json' } });
+    } catch (error) {
+        console.error(error);
+        await connection.end();
+        return new Response('Error', { status: 500 });
+    }
+}</code></pre>
+        <p>Il faudra également installer le package mysql2 pour avoir accès à notre base de données :</p>
+        <pre><code class="language-shell">npm install mysql2
+npm install --save-dev @types/node</code></pre>
+    </section>
+
+    <section>
+        <h3>Route Handler cache</h3>
+        <p>Les Routes Handlers tout comme les Pages seront mises en cache lorsque l'on va build l'application.</p>
+        <p>
+            Cela peut poser des problèmes si les données sont mises à jour fréquemment.
+            Pour éviter cela, il est possible de
+            <a href="https://nextjs.org/docs/app/building-your-application/routing/route-handlers#opting-out-of-caching" target="_blank">désactiver le cache</a>
+            par exemple en forçant le chargement dynamique de la route :
+        </p>
+        <pre><code class="language-ts">// src/app/api/resources/route.ts
+export const dynamic = 'force-dynamic';
+
+export async function GET(request: Request) {
+    [...]
+}</code></pre>
+        <p>
+            Il serait également possible d'utiliser le système de
+            <a href="https://nextjs.org/docs/app/building-your-application/routing/route-handlers#revalidating-cached-data" target="_blank">revalidation temporelle</a>.
+        </p>
+        <footer>
+            <a href="#" class="info">
+                Le cache ne fonctionne que sur la méthode GET
+            </a>
+        </footer>
+    </section>
+
+
+    <section>
+        <h3>Utiliser l'API fetch</h3>
+        <p>
+            Pour récupérer les données de l'API, nous allons utiliser l'API fetch de Next.js.
+            Pour cela, nous allons créer un composant React qui va appeler l'API :
+        </p>
+        <pre style="max-height: 40vh"><code class="language-tsx">// src/app/resources/page.tsx
+export default async function ResourcesPage() {
+    const response = await fetch('http://localhost:3000/api/resources');
+    [...]
+}</code></pre>
+    </section>
+
+    <section>
+        <h3>Le cache</h3>
+        <p>Par défaut, Next.js va automatiquement <strong>mettre en cache</strong> les données de l'API fetch.</p>
+        <p>
+            Cependant, cela peut être <strong>problématique</strong> pour notre application si les
+            <strong>données sont mises à jour fréquemment</strong>.
+        </p>
+        <p>Nous pouvons constater le problème en générant le build de notre application :</p>
+        <pre><code class="language-shell">npm run build
+npm run start</code></pre>
+        <p>
+            En naviguant sur la page des ressources, nous pouvons constater que les données ne sont pas actualisées
+            si nous ajoutons des données en base de données.
+            Cela est dû au fait que les données sont mises en cache par Next.js.
+        </p>
+        <footer>
+            <a href="#" class="info">Le cache n'est pas actif en environnement de dev</a>
+        </footer>
+    </section>
+
+    <section>
+        <h3>Revalidation temporelle</h3>
+        <p>
+            Pour résoudre ce problème, nous allons utiliser le système de <strong>revalidation</strong> de Next.js.
+            Pour cela, nous allons ajouter un paramètre <strong>revalidate</strong> lors de l'appel à l'API fetch :
+        </p>
+        <pre style="max-height: 40vh"><code class="language-tsx">// src/app/resources/page.tsx
+export default async function ResourcesPage() {
+    const response = await fetch('http://localhost:3000/api/resources', { revalidate: 60 });
+    [...]
+}</code></pre>
+        <p>
+            Cela va permettre de <strong>rafraîchir les données</strong> toutes
+            les <strong>60 secondes</strong> pour s'assurer que les données sont à jour.
+        </p>
+    </section>
+
+    <section>
+        <h3>Revalidation à la demande</h3>
+        <p>
+            Il est également possible de <strong>forcer la revalidation</strong> des données à la demande.
+            Pour cela, nous allons ajouter un bouton qui va appeler la fonction <strong>revalidate</strong> :
+        </p>
+        <pre><code class="language-tsx">// src/app/resources/page.tsx
+export default async function ResourcesPage() {
+    const response = await fetch('http://localhost:3000/api/resources', { next: { revalidate: 60, tags: ['resources'] } });
+    [...]
+    return (
+        &lt;div&gt;
+            [...]
+            &lt;button onClick={() => revalidateTag('resources')}&gt;Refresh&lt;/button&gt;
+        &lt;/div&gt;
+    );
+}</code></pre>
+        <p>
+            Cependant, le code ci-dessus ne fonctionnera pas, car il n'est pas possible d'utiliser l'attribut
+            <code class="language-jsx">onClick</code> dans un Server Component.
+            Il faudra donc extraire le bouton dans un composant React et utiliser la directive <code class="language-jsx">'use client'</code>.
+        </p>
+        <pre class="next-error">Error: Event handlers cannot be passed to Client Component props.
+  &lt;button onClick={function onClick} children=...&gt;
+                  ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.</pre>
+    </section>
+
+    <section>
+        <h3>Revalidation à la demande</h3>
+        <p>
+            Nous allons donc créer un nouveau composant <code class="language-jsx">RefreshButton</code>
+            qui fera appel à la fonction <code class="language-jsx">revalidateTag</code> :
+        </p>
+        <pre><code class="language-tsx">// src/components/refresh-button.tsx
+'use client';
+
+export default function RefreshButton() {
+    return (
+        &lt;button onClick={() => revalidateTag('resources')}&gt;Refresh&lt;/button&gt;
+    );
+}</code></pre>
+        <p>
+            Malheureusement, le code ci-dessus ne fonctionnera toujours pas, car le cache a été généré dans un Server Component
+            et ne peut pas être utilisé dans un Client Component.
+        </p>
+        <pre class="next-error">Error: Invariant: static generation store missing in revalidateTag resources</pre>
+        <p>
+            Il faudra donc créer un
+            <a href="https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations" target="_blank">Server Action</a>
+            de Next.js pour appeler la fonction <code class="language-jsx">revalidateTag</code> côté serveur.
+        </p>
+    </section>
+
+    <section>
+        <h3>Revalidation à la demande</h3>
+        <p>Nous pouvons donc modifier le code de notre composant de la manière suivante :</p>
+        <pre><code class="language-tsx">// src/components/refresh-button.tsx
+'use client';
+
+export default function RefreshButton() {
+    async function revalidate() {
+        'use server';
+        revalidateTag('resources')
+    }
+    return (
+        &lt;button onClick={() => revalidate()}&gt;Refresh&lt;/button&gt;
+    );
+}</code></pre>
+        <p>
+            Mais là encore, le code ci-dessus ne fonctionnera pas, car il n'est pas possible d'utiliser la directive
+            <code class="language-jsx">'use server'</code> dans un Client Component.
+        </p>
+        <pre class="next-error">Error:
+  × It is not allowed to define inline "use server" annotated Server Actions in Client Components.
+  │ To use Server Actions in a Client Component, you can either export them from a separate file with "use server" at the top, or pass them down through props from a Server Component.</pre>
+        <p>Nous allons donc exporter la fonction <code class="language-jsx">revalidate</code> dans un fichier séparé.</p>
+    </section>
+
+    <section>
+        <h3>Revalidation à la demande</h3>
+        <p>Nous allons donc créer un fichier <code class="language-js">actions.ts</code> :</p>
+        <pre><code class="language-ts">// src/app/actions.ts
+'use server';
+
+import { revalidateTag } from "next/cache";
+
+export async function refreshResources() {
+    revalidateTag('resources');
+}</code></pre>
+        <p>
+            À présent, notre code devrait fonctionner correctement et nous devrions être en mesure de rafraîchir les
+            données de notre application en cliquant sur le bouton <strong>Refresh</strong>.
+        </p>
+    </section>
+
+    <section>
+        <h3>Exercices</h3>
+        <div class="instructions">
+            <ol>
+                <li>Créer un formulaire pour ajouter une ressource.</li>
+                <li>
+                    Gérer le traitement du formulaire en utilisant les
+                    <a href="https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations" target="_blank">Server Actions</a>
+                </li>
+            </ol>
+        </div>
+        <div class="instructions">
+            <ol>
+                <li>Afficher la liste des tags.</li>
+                <li>Afficher la liste des ressources associées à un tag.</li>
+            </ol>
+        </div>
+    </section>
+
+    <section>
+        <h3>QCM</h3>
+        <form action="05-data-fetching.html" method="post">
+            <ol>
+                <li>
+                    <h4>Quelle méthode permet de stocker en cache les résultats de fonctions ?</h4>
+                    <ul>
+                        <li><input type="radio" name="q1" id="q1-1"><label for="q1-1">Memoization</label></li>
+                        <li><input type="radio" name="q1" id="q1-2"><label for="q1-2">Revalidation</label></li>
+                        <li><input type="radio" name="q1" id="q1-3"><label for="q1-3">Cache</label></li>
+                    </ul>
+                </li>
+                <li>
+                    <h4>Quelle méthode permet de rafraîchir les données toutes les 60 secondes ?</h4>
+                    <ul>
+                        <li><input type="radio" name="q2" id="q2-1"><label for="q2-1">Memoization</label></li>
+                        <li><input type="radio" name="q2" id="q2-2"><label for="q2-2">Revalidation</label></li>
+                        <li><input type="radio" name="q2" id="q2-3"><label for="q2-3">Cache</label></li>
+                    </ul>
+                </li>
+                <li>
+                    <h4>Quelle méthode permet de forcer la revalidation des données à la demande ?</h4>
+                    <ul>
+                        <li><input type="radio" name="q3" id="q3-1"><label for="q3-1">Memoization</label></li>
+                        <li><input type="radio" name="q3" id="q3-2"><label for="q3-2">Revalidation</label></li>
+                        <li><input type="radio" name="q3" id="q3-3"><label for="q3-3">Cache</label></li>
+                    </ul>
+                </li>
+                <li>
+                    <h4>Quelle méthode permet de stocker en cache les données de l'API fetch ?</h4>
+                    <ul>
+                        <li><input type="radio" name="q4" id="q4-1"><label for="q4-1">Memoization</label></li>
+                        <li><input type="radio" name="q4" id="q4-2"><label for="q4-2">Revalidation</label></li>
+                        <li><input type="radio" name="q4" id="q4-3"><label for="q4-3">Cache</label></li>
+                    </ul>
+                </li>
+
+    </section>
+
 </section>

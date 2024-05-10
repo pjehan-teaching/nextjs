@@ -6,7 +6,7 @@
 
     <section>
         <h3>App Router VS Page Router</h3>
-        <p>Un nouveau système de routage a été introduit avec NextJS 13. Il s'agit de <strong>App Router</strong>.</p>
+        <p>Un nouveau système de routage a été introduit avec Next.js 13. Il s'agit de <strong>App Router</strong>.</p>
         <p>App Router permet d'utiliser les <strong>dernières fonctionnalités de React</strong> tel que les Server Components et le système de Streaming.</p>
         <p>Il est donc recommandé aujourd'hui d'utiliser App Router et l'ensemble des slides suivantes seront basées sur ce nouveau système.</p>
         <footer>
@@ -18,7 +18,7 @@
 
     <section>
         <h3>Dossiers et fichiers</h3>
-        <p>Avec NextJS, la gestion des routes se fait par l'<strong>arborescence</strong> des dossiers et des fichiers.</p>
+        <p>Avec Next.js, la gestion des routes se fait par l'<strong>arborescence</strong> des dossiers et des fichiers.</p>
         <p>
             Il est donc important de respecter certaines <strong>conventions</strong> dans le nommage des dossiers et
             des fichiers pour que le routage fonctionne correctement.
@@ -102,7 +102,7 @@ export default function Page() {
 
     <section>
         <h3>Liens et navigation</h3>
-        <p>NextJS permet de naviguer entre les URLs de notre application de 4 manières différentes :</p>
+        <p>Next.js permet de naviguer entre les URLs de notre application de 4 manières différentes :</p>
         <ul>
             <li>
                 En utilisant le composant
@@ -203,7 +203,7 @@ export const verifySession = cache(async () => {
 
     <section>
         <h3>Routes dynamiques</h3>
-        <p>NextJS permet de créer des routes dynamiques en utilisant des crochets <code>[...]</code> dans le nom des dossiers :</p>
+        <p>Next.js permet de créer des routes dynamiques en utilisant des crochets <code>[...]</code> dans le nom des dossiers :</p>
         <pre><code class="language-">app
 ├── about
 │   └── page.jsx
@@ -224,7 +224,7 @@ export const verifySession = cache(async () => {
     <section>
         <h3>Routes dynamiques - Exemple</h3>
         <p>Voici un exemple de page dynamique qui affiche le contenu d'un article en fonction de son slug :</p>
-        <pre><code class="language-jsx">// pages/news/[slug]/page.jsx
+        <pre><code class="language-jsx">// src/app/news/[slug]/page.jsx
 
 export default function Page({params}: {params: {slug: string}}) {
   return (
@@ -235,7 +235,7 @@ export default function Page({params}: {params: {slug: string}}) {
 
     <section>
         <h3>Gestion des erreurs</h3>
-        <p>NextJS permet de gérer les erreurs 404 et 500 en créant des fichiers spécifiques :</p>
+        <p>Next.js permet de gérer les erreurs 404 et 500 en créant des fichiers spécifiques :</p>
         <pre><code class="language-">app
 ├── about
 │   └── page.jsx
@@ -253,7 +253,7 @@ export default function Page({params}: {params: {slug: string}}) {
     <section>
         <h3>Gestion des erreurs - Exemple</h3>
         <p>Voici un exemple de code pour la gestion des erreurs 500 :</p>
-        <pre><code class="language-jsx">// pages/news/[slug]/error.jsx
+        <pre><code class="language-jsx">// src/app/news/[slug]/error.jsx
 'use client'
 
 export default function Error({
@@ -280,7 +280,7 @@ export default function Error({
     <section>
         <h3>Gestion des erreurs - Exemple</h3>
         <p>Voici un exemple de code pour la gestion des erreurs 404 :</p>
-        <pre><code class="language-jsx">// pages/news/[slug]/not-found.jsx
+        <pre><code class="language-jsx">// src/app/news/[slug]/not-found.jsx
 import Link from 'next/link'
 
 export default function NotFound() {
@@ -301,7 +301,7 @@ export default function NotFound() {
 
     <section>
         <h3>Aller plus loin...</h3>
-        <p>La documentation de NextJS comprend de nombreuses pages supplémentaire pour aller plus loin sur le routage :</p>
+        <p>La documentation de Next.js comprend de nombreuses pages supplémentaire pour aller plus loin sur le routage :</p>
         <ul>
             <li>
                 <a href="https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming" target="_blank">Loading UI and Streaming</a> :

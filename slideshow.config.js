@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'NextJS',
+  name: 'Next.js',
   stylesheets: [],
   javascripts: ['assets/js/script.js'],
   revealjs: {
