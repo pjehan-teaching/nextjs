@@ -438,6 +438,27 @@ export async function refreshResources() {
     </section>
 
     <section>
+        <h3>Le composant &lt;Image&gt;</h3>
+        <p>
+            Next.js propose un composant
+            <a href="https://nextjs.org/docs/app/building-your-application/optimizing/images" target="_blank">&lt;Image&gt;</a>
+            qui permet de gérer les images de manière optimisée.
+        </p>
+        <p>
+            Ce composant va automatiquement optimiser les images en fonction de la <strong>taille de l'écran</strong>
+            et du navigateur pour améliorer les performances de l'application.
+        </p>
+        <p>
+            Il va également utiliser les <strong>formats d'images modernes</strong> comme WebP ou AVIF pour améliorer
+            la qualité des images tout en réduisant leur taille.
+        </p>
+        <p>
+            Il va également utiliser la méthode de <strong>lazy loading</strong> pour charger les images uniquement
+            lorsqu'elles sont visibles à l'écran.
+        </p>
+    </section>
+
+    <section>
         <h3>Exercices</h3>
         <div class="instructions">
             <ol>
@@ -454,45 +475,6 @@ export async function refreshResources() {
                 <li>Afficher la liste des ressources associées à un tag.</li>
             </ol>
         </div>
-    </section>
-
-    <section>
-        <h3>QCM</h3>
-        <form action="05-data-fetching.html" method="post">
-            <ol>
-                <li>
-                    <h4>Quelle méthode permet de stocker en cache les résultats de fonctions ?</h4>
-                    <ul>
-                        <li><input type="radio" name="q1" id="q1-1"><label for="q1-1">Memoization</label></li>
-                        <li><input type="radio" name="q1" id="q1-2"><label for="q1-2">Revalidation</label></li>
-                        <li><input type="radio" name="q1" id="q1-3"><label for="q1-3">Cache</label></li>
-                    </ul>
-                </li>
-                <li>
-                    <h4>Quelle méthode permet de rafraîchir les données toutes les 60 secondes ?</h4>
-                    <ul>
-                        <li><input type="radio" name="q2" id="q2-1"><label for="q2-1">Memoization</label></li>
-                        <li><input type="radio" name="q2" id="q2-2"><label for="q2-2">Revalidation</label></li>
-                        <li><input type="radio" name="q2" id="q2-3"><label for="q2-3">Cache</label></li>
-                    </ul>
-                </li>
-                <li>
-                    <h4>Quelle méthode permet de forcer la revalidation des données à la demande ?</h4>
-                    <ul>
-                        <li><input type="radio" name="q3" id="q3-1"><label for="q3-1">Memoization</label></li>
-                        <li><input type="radio" name="q3" id="q3-2"><label for="q3-2">Revalidation</label></li>
-                        <li><input type="radio" name="q3" id="q3-3"><label for="q3-3">Cache</label></li>
-                    </ul>
-                </li>
-                <li>
-                    <h4>Quelle méthode permet de stocker en cache les données de l'API fetch ?</h4>
-                    <ul>
-                        <li><input type="radio" name="q4" id="q4-1"><label for="q4-1">Memoization</label></li>
-                        <li><input type="radio" name="q4" id="q4-2"><label for="q4-2">Revalidation</label></li>
-                        <li><input type="radio" name="q4" id="q4-3"><label for="q4-3">Cache</label></li>
-                    </ul>
-                </li>
-
     </section>
 
 </section>
