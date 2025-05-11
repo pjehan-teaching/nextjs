@@ -52,7 +52,7 @@
                 <p>
                     Cette question permet de choisir si on souhaite utiliser un dossier <code class="language-shell">src/</code>
                     pour stocker les fichiers sources de notre application.
-                    Ce dossier n'est <a href="https://nextjs.org/docs/app/building-your-application/configuring/src-directory">pas présent historiquement</a>
+                    Ce dossier n'est <a href="https://nextjs.org/docs/app/building-your-application/configuring/src-directory" target="_blank">pas présent historiquement</a>
                     dans les projets Next.js mais l'on peut choisir de l'utiliser.<br>
                     On peut choisir de répondre <code class="language-shell">Yes</code> à cette question.
                 </p>
@@ -83,6 +83,25 @@
                     Cela permettra de simplifier les imports dans notre application :
                     <pre><code class="language-javascript">import { Button } from '../../components/Button'; // Sans alias
 import { Button } from '@/components/Button'; // Avec alias</code></pre>
+                    On va généralement répondre <code class="language-shell">Yes</code> à cette question.
+                </p>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h3>Création du projet</h3>
+        <ul>
+            <li>
+                <code class="language-shell">Would you like to use Turbopack for `next dev`?</code>
+                <p>
+                    <a href="https://nextjs.org/docs/app/api-reference/turbopack" target="_blank">Turbopack</a>
+                    est un nouvel outil de compilation écrit en Rust et développé par l'équipe de Next.js.
+                </p>
+                <p>
+                    Il permet d'accélérer le temps de compilation de nos applications Next.js.
+                </p>
+                <p>
                     On va généralement répondre <code class="language-shell">Yes</code> à cette question.
                 </p>
             </li>
