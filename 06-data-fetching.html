@@ -23,7 +23,7 @@
         </p>
         <p>React étend automatiquement l'API fetch pour permettre de diminuer le nombre de requêtes.</p>
         <p>
-            Si l'API fetch ne peut pas être utilisée () il est toujours possible d'utiliser la fonction
+            Si l'API fetch ne peut pas être utilisée, il est toujours possible d'utiliser la fonction
             <a href="https://nextjs.org/docs/app/building-your-application/caching#react-cache-function" target="_blank">cache</a> de React.
         </p>
         <footer>
@@ -103,7 +103,7 @@ services:
 volumes:
   mysql-data:</code></pre>
         <p>Puis démarrer le container :</p>
-        <pre><code class="language-shell">docker-compose up</code></pre>
+        <pre><code class="language-shell">docker compose up</code></pre>
     </section>
 
     <section>
@@ -266,7 +266,10 @@ npm install --save-dev @types/node</code></pre>
 
     <section>
         <h3>Route Handler cache</h3>
-        <p>Les Routes Handlers tout comme les Pages seront mises en cache lorsque l'on va build l'application.</p>
+        <p>
+            Les Routes Handlers tout comme les Pages seront <del>mises en cache</del> (plus depuis la version 15 de Next.js)
+            lorsque l'on va build l'application.
+        </p>
         <p>
             Cela peut poser des problèmes si les données sont mises à jour fréquemment.
             Pour éviter cela, il est possible de
@@ -274,7 +277,7 @@ npm install --save-dev @types/node</code></pre>
             par exemple en forçant le chargement dynamique de la route :
         </p>
         <pre><code class="language-ts">// src/app/api/resources/route.ts
-export const dynamic = 'force-dynamic';
+export const dynamic = 'force-dynamic'; // 'force-static' pour activer le cache (version 15 de Next.js)
 
 export async function GET(request: Request) {
     [...]
@@ -283,11 +286,6 @@ export async function GET(request: Request) {
             Il serait également possible d'utiliser le système de
             <a href="https://nextjs.org/docs/app/building-your-application/routing/route-handlers#revalidating-cached-data" target="_blank">revalidation temporelle</a>.
         </p>
-        <footer>
-            <a href="#" class="info">
-                Le cache ne fonctionne que sur la méthode GET
-            </a>
-        </footer>
     </section>
 
 
@@ -306,7 +304,7 @@ export default async function ResourcesPage() {
 
     <section>
         <h3>Le cache</h3>
-        <p>Par défaut, Next.js va automatiquement <strong>mettre en cache</strong> les données de l'API fetch.</p>
+        <p>Par défaut, Next.js va automatiquement <del>mettre en cache</del> (plus depuis la version 15 de Next.js) les données de l'API fetch.</p>
         <p>
             Cependant, cela peut être <strong>problématique</strong> pour notre application si les
             <strong>données sont mises à jour fréquemment</strong>.
