@@ -76,23 +76,6 @@
         <h3>Création du projet</h3>
         <ul>
             <li>
-                <code class="language-shell">Would you like to customize the default import alias (@/*)?</code>
-                <p>
-                    Cette question permet de choisir si on souhaite utiliser un alias pour importer nos fichiers.
-                    Par défaut, Next.js utilise l'alias <code class="language-shell">@/</code> pour importer les fichiers du dossier <code class="language-shell">src/</code>.<br>
-                    Cela permettra de simplifier les imports dans notre application :
-                    <pre><code class="language-javascript">import { Button } from '../../components/Button'; // Sans alias
-import { Button } from '@/components/Button'; // Avec alias</code></pre>
-                    On va généralement répondre <code class="language-shell">Yes</code> à cette question.
-                </p>
-            </li>
-        </ul>
-    </section>
-
-    <section>
-        <h3>Création du projet</h3>
-        <ul>
-            <li>
                 <code class="language-shell">Would you like to use Turbopack for `next dev`?</code>
                 <p>
                     <a href="https://nextjs.org/docs/app/api-reference/turbopack" target="_blank">Turbopack</a>
@@ -102,6 +85,23 @@ import { Button } from '@/components/Button'; // Avec alias</code></pre>
                     Il permet d'accélérer le temps de compilation de nos applications Next.js.
                 </p>
                 <p>
+                    On va généralement répondre <code class="language-shell">No</code> à cette question.
+                </p>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h3>Création du projet</h3>
+        <ul>
+            <li>
+                <code class="language-shell">Would you like to customize the default import alias (@/*)?</code>
+                <p>
+                    Cette question permet de choisir si on souhaite utiliser un alias pour importer nos fichiers.
+                    Par défaut, Next.js utilise l'alias <code class="language-shell">@/</code> pour importer les fichiers du dossier <code class="language-shell">src/</code>.<br>
+                    Cela permettra de simplifier les imports dans notre application :
+                    <pre><code class="language-javascript">import { Button } from '../../components/Button'; // Sans alias
+import { Button } from '@/components/Button'; // Avec alias</code></pre>
                     On va généralement répondre <code class="language-shell">Yes</code> à cette question.
                 </p>
             </li>
@@ -123,13 +123,12 @@ import { Button } from '@/components/Button'; // Avec alias</code></pre>
 │   │   └── global.css
 │   │   └── layout.tsx # Layout de l'application
 │   │   └── page.tsx # Page d'accueil
-├── .eslintrc.js # Configuration d'ESLint (si ESLint sélectionné lors de la création du projet)
 ├── .gitignore
-├── next.config.mjs # Configuration de Next.js (ES6 module file)
+├── eslint.config.mjs # Configuration d'ESLint (si ESLint sélectionné lors de la création du projet)
+├── next.config.ts # Configuration de Next.js
 ├── package.json
 ├── postcss.config.mjs # Configuration de PostCSS (si Tailwind sélectionné lors de la création du projet)
 ├── README.md
-├── tailwind.config.ts # Configuration de Tailwind CSS (si Tailwind sélectionné lors de la création du projet)
 └── tsconfig.json # Configuration de TypeScript (si TypeScript sélectionné lors de la création du projet)</code></pre>
     </section>
 
